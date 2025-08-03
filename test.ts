@@ -1,11 +1,11 @@
 import { stackSorter } from './stack-sort.ts';
-import { Stack } from './stack.ts'
+import { Stack } from './stack.ts';
 
 function test(stacks: Stack<string>[]) {
-  console.log('INITIAL:')
+  console.log('INITIAL:');
   printStacks(stacks);
   stackSorter(stacks);
-  console.log('RESULT:')
+  console.log('RESULT:');
   printStacks(stacks);
 }
 
@@ -19,11 +19,8 @@ function printStacks(stacks: Stack<string>[]) {
     }
     console.log(row.join('|'));
   }
+  console.log('');
 }
 
 const max = 5;
-test([
-  new Stack(max, ['A', 'B'] as const),
-  new Stack(max, ['A', 'B'] as const),
-  new Stack(max, ['A', 'B'] as const),
-])
+test([new Stack(max, ['A', 'B'] as const), new Stack(max, ['A', 'B'] as const), new Stack(max, ['A', 'B'] as const)]);
