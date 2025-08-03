@@ -21,6 +21,8 @@ export class Stack {
   push(vals: string[]) {
     if (!vals.length) throw new Error('Cannot push empty array');
 
+    if (vals.length + this.stack.length > this.maxHeight) throw new Error('Cannot push more items than the stack has space');
+
     const val = this.stack.at(-1);
     if (!vals.every(v => v === val)) throw new Error('Can only push values matching the top of the stack');
 
