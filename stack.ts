@@ -37,4 +37,17 @@ export class Stack<C extends string> {
     }
     return res;
   }
+
+  view() {
+    let val: C | undefined;
+    const vals: C[] = []
+    for(let i = this.stack.length - 1; i >= 0; i--) {
+      val ??= this.stack[i];
+      if(val !== this.stack[i]){
+        break;
+      }
+      vals.push(val);
+    }
+    return vals
+  }
 }
