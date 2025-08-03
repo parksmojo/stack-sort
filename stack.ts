@@ -1,55 +1,62 @@
-export class Stack {
-  constructor(
-    private maxLength: number,
-    private stack: string[]
-  ) {
-    if (stack.length > maxLength) throw new Error('Cannot make a stack that exceeds its own max height.');
-  }
+interface Group {
+  value: string
+  count: number
+}
 
-  get values() {
-    return this.stack;
-  }
+export class Stack {
+  private stack: Group[];
 
   get height() {
-    return this.stack.length;
+    return this.stack.reduce((prev, now) => prev + now.count, 0);
   }
 
   get maxHeight() {
     return this.maxLength;
   }
 
-  push(vals: string[]) {
-    if (!vals.length) throw new Error('Cannot push empty array');
-
-    if (vals.length + this.stack.length > this.maxHeight) throw new Error('Cannot push more items than the stack has space');
-
-    const val = this.stack.at(-1);
-    if (val && !vals.every(v => v === val)) throw new Error('Can only push values matching the top of the stack');
-
-    return this.stack.push(...vals);
+  get space() {
+    return this.maxHeight - this.height;
   }
 
-  pop() {
-    const first = this.stack.pop();
-    if (!first) throw new Error('Cannot pop from empty stack');
-
-    const res = [first];
-    while (this.stack.at(-1) === first) {
-      res.push(this.stack.pop()!);
-    }
-    return res;
+  get groups() {
+    return this.stack;
   }
 
-  view() {
-    let val: string | undefined;
+  get values() {
     const vals: string[] = [];
-    for (let i = this.stack.length - 1; i >= 0; i--) {
-      val ??= this.stack[i];
-      if (val !== this.stack[i]) {
-        break;
+    for (const group of this.stack) {
+      for (let i = 0; i < group.count; i++) {
+        vals.push(group.value);
       }
-      vals.push(val);
-    }
+    }    
     return vals;
+  }
+
+  constructor(
+    private maxLength: number,
+    initialValues: string[]
+  ) {
+    if (initialValues.length > maxLength) throw new Error('Cannot make a stack that exceeds its own max height.');
+
+    this.stack = [];
+    for (const val of initialValues) {
+      let group = this.stack.at(-1);
+      if (!group || group.value !== val) {
+        this.stack.push({
+          value: val,
+          count: 1
+        });
+      } else {
+        group.count++;
+      }
+    }
+  }
+
+  static move(from: Stack, to: Stack): void {
+    if (!from.height) throw new Error('cannot move from empty stack');
+    if (to.height && from.groups.at(-1)?.value !== to.groups.at(-1)?.value) throw new Error('Cannot combine different colors');
+    if (from.groups.at(-1)!.count > to.space) throw new Error('Not enough space on destination stack');
+
+    to.groups.push(from.groups.pop);
   }
 }
