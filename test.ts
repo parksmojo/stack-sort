@@ -1,7 +1,7 @@
 import { stackSorter } from './stack-sort.ts';
 import { Stack } from './stack.ts';
 
-function test(stacks: Stack<string>[]) {
+function test(stacks: Stack[]) {
   console.log('INITIAL:');
   printStacks(stacks);
   stackSorter(stacks);
@@ -9,7 +9,7 @@ function test(stacks: Stack<string>[]) {
   printStacks(stacks);
 }
 
-function printStacks(stacks: Stack<string>[]) {
+function printStacks(stacks: Stack[]) {
   const start = stacks[0].maxHeight - 1;
 
   for (let i = start; i >= 0; i--) {

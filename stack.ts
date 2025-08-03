@@ -1,7 +1,7 @@
-export class Stack<C extends string> {
+export class Stack {
   constructor(
     private maxLength: number,
-    private stack: C[]
+    private stack: string[]
   ) {
     if (stack.length > maxLength) throw new Error('Cannot make a stack that exceeds its own max height.');
   }
@@ -18,11 +18,11 @@ export class Stack<C extends string> {
     return this.maxLength;
   }
 
-  push(vals: C[]) {
+  push(vals: string[]) {
     if (!vals.length) throw new Error('Cannot push empty array');
 
-    const val = vals[0];
-    if (!vals.every(v => v === val)) throw new Error('Cannot push array of different values');
+    const val = this.stack.at(-1);
+    if (!vals.every(v => v === val)) throw new Error('Can only push values matching the top of the stack');
 
     return this.stack.push(...vals);
   }
@@ -39,15 +39,15 @@ export class Stack<C extends string> {
   }
 
   view() {
-    let val: C | undefined;
-    const vals: C[] = []
-    for(let i = this.stack.length - 1; i >= 0; i--) {
+    let val: string | undefined;
+    const vals: string[] = [];
+    for (let i = this.stack.length - 1; i >= 0; i--) {
       val ??= this.stack[i];
-      if(val !== this.stack[i]){
+      if (val !== this.stack[i]) {
         break;
       }
       vals.push(val);
     }
-    return vals
+    return vals;
   }
 }
