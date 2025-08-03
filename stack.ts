@@ -1,6 +1,6 @@
 interface Group {
-  value: string
-  count: number
+  value: string;
+  count: number;
 }
 
 export class Stack {
@@ -28,7 +28,7 @@ export class Stack {
       for (let i = 0; i < group.count; i++) {
         vals.push(group.value);
       }
-    }    
+    }
     return vals;
   }
 
@@ -44,7 +44,7 @@ export class Stack {
       if (!group || group.value !== val) {
         this.stack.push({
           value: val,
-          count: 1
+          count: 1,
         });
       } else {
         group.count++;
@@ -54,9 +54,11 @@ export class Stack {
 
   static move(from: Stack, to: Stack): void {
     if (!from.height) throw new Error('cannot move from empty stack');
-    if (to.height && from.groups.at(-1)?.value !== to.groups.at(-1)?.value) throw new Error('Cannot combine different colors');
+    if (to.height && from.groups.at(-1)?.value !== to.groups.at(-1)?.value) {
+      throw new Error('Cannot combine different colors');
+    }
     if (from.groups.at(-1)!.count > to.space) throw new Error('Not enough space on destination stack');
 
-    to.groups.push(from.groups.pop);
+    to.groups.push(from.groups.pop()!);
   }
 }
