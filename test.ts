@@ -1,7 +1,8 @@
 import { stackSorter } from './stack-sort.ts';
 import { Stack } from './stack.ts';
 
-function test(stacks: Stack[]) {
+function test(size: number, arrs: string[][]) {
+  const stacks = arrs.map(arr => new Stack(size, arr));
   console.log('INITIAL:');
   printStacks(stacks);
   stackSorter(stacks);
@@ -22,5 +23,20 @@ function printStacks(stacks: Stack[]) {
   console.log('');
 }
 
-const max = 5;
-test([new Stack(max, ['A', 'B']), new Stack(max, ['A', 'B']), new Stack(max, ['A', 'B'])]);
+const testCases: [number, string[][]][] = [
+  [
+    4,
+    [
+      ['A', 'B'],
+      ['B', 'B'],
+      ['A', 'B'],
+    ],
+  ],
+  [
+    4,
+    [['G', 'B', 'Y'], ['A', 'A', 'R'], ['B', 'B', 'G'], ['R', 'G', 'R'], ['Y', 'Y', 'A'], ['Y', 'G', 'A', 'B'], ['R']],
+  ],
+  [4, [['B', 'Y', 'B', 'Y'], ['Y', 'B', 'Y', 'B'], []]],
+];
+
+testCases.forEach(([size, arr]) => test(size, arr));
