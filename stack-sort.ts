@@ -1,8 +1,9 @@
 import { Stack } from './stack.ts';
 
-export function stackSorter(stacks: Stack[]): void {
+export function stackSorter(stacks: Stack[]): number {
   const iStacks = Array.from(stacks.entries());
 
+  let moves = 0;
   let madeChange = true;
   while (madeChange) {
     madeChange = false;
@@ -15,6 +16,7 @@ export function stackSorter(stacks: Stack[]): void {
         const groupToBeMoved = fromStack.groups.at(-1)!;
         if (groupToBeMoved.count <= toStack.space) {
           Stack.move(fromStack, toStack);
+          moves++;
           madeChange = true;
           break;
         }
@@ -22,5 +24,8 @@ export function stackSorter(stacks: Stack[]): void {
       if (madeChange) break;
     }
     if (madeChange) continue;
+
+
   }
+  return moves;
 }
