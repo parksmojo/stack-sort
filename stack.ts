@@ -10,10 +10,6 @@ export class Stack {
     return this.groups.reduce((prev, now) => prev + now.count, 0);
   }
 
-  get maxHeight() {
-    return this.maxLength;
-  }
-
   get space() {
     return this.maxHeight - this.height;
   }
@@ -29,10 +25,10 @@ export class Stack {
   }
 
   constructor(
-    private maxLength: number,
+    readonly maxHeight: number,
     initialValues: string[]
   ) {
-    if (initialValues.length > maxLength) throw new Error('Cannot make a stack that exceeds its own max height.');
+    if (initialValues.length > maxHeight) throw new Error('Cannot make a stack that exceeds its own max height.');
 
     this.groups = [];
     for (const val of initialValues) {

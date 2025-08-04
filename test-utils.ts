@@ -11,7 +11,23 @@ export function testFunc(arrs: string[][]) {
   printer.print(result);
 }
 
-export class StackPrinter {
+export const checkSorted = (stacks: Stack[]) =>
+  stacks.every(stack => (stack.groups.length === 1 ? stack.height === stack.maxHeight : stack.groups.length === 0));
+
+
+export function printState(stacks: Stack[]) {
+  const stackArrays = stacks.map(s => s.values);
+  for (let i = stacks[0].maxHeight - 1; i >= 0; i--) {
+    const row: string[] = [];
+    for (const stack of stackArrays) {
+      row.push(stack.at(i) ?? ' ');
+    }
+    console.log('|' + row.join('|') + '|');
+  }
+  console.log('---');
+}
+
+class StackPrinter {
   private initialLines: string[] = [];
   private resultLines: string[] = [];
   private pass: boolean = false;
@@ -49,6 +65,3 @@ export class StackPrinter {
     console.log('-----');
   }
 }
-
-export const checkSorted = (stacks: Stack[]) =>
-  stacks.every(stack => (stack.groups.length === 1 ? stack.height === stack.maxHeight : stack.groups.length === 0));
