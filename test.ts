@@ -10,12 +10,12 @@ function test(stacks: Stack[]) {
 }
 
 function printStacks(stacks: Stack[]) {
+  const stackArrays = stacks.map(s => s.values);
   const start = stacks[0].maxHeight - 1;
-
   for (let i = start; i >= 0; i--) {
     const row: string[] = [];
-    for (const stack of stacks) {
-      row.push(stack.values.at(i) ?? ' ');
+    for (const stack of stackArrays) {
+      row.push(stack.at(i) ?? ' ');
     }
     console.log(row.join('|'));
   }
@@ -23,4 +23,4 @@ function printStacks(stacks: Stack[]) {
 }
 
 const max = 5;
-test([new Stack(max, ['A', 'B'] as const), new Stack(max, ['A', 'B'] as const), new Stack(max, ['A', 'B'] as const)]);
+test([new Stack(max, ['A', 'B']), new Stack(max, ['A', 'B']), new Stack(max, ['A', 'B'])]);
