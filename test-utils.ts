@@ -1,5 +1,5 @@
-import { Stack } from "./stack.ts";
-import { stackSorter } from "./stack-sort.ts";
+import { Stack } from './stack.ts';
+import { stackSorter } from './stack-sort.ts';
 
 export function testFunc(arrs: string[][]) {
   const stacks = arrs.map(arr => new Stack(4, arr));
@@ -36,7 +36,7 @@ export class StackPrinter {
       }
       this.resultLines.push(row.join('|'));
     }
-    this.pass = stacks.every(stack => stack.groups.length <= 1)
+    this.pass = checkSorted(stacks);
   }
 
   print(moves: number) {
@@ -49,3 +49,6 @@ export class StackPrinter {
     console.log('-----');
   }
 }
+
+export const checkSorted = (stacks: Stack[]) =>
+  stacks.every(stack => (stack.groups.length === 1 ? stack.height === stack.maxHeight : stack.groups.length === 0));
