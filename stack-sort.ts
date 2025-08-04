@@ -8,7 +8,7 @@ export function stackSorter(stacks: Stack[]): number {
   while (madeChange) {
     madeChange = false;
     if (checkSorted(stacks)) break;
-    printState(stacks);
+    // printState(stacks);
 
     const singleColorStacks = iStacks.filter(([_, stack]) => stack.groups.length === 1 && stack.space);
     for (const [i, toStack] of singleColorStacks) {
@@ -35,7 +35,6 @@ export function stackSorter(stacks: Stack[]): number {
       const stacksWithHelpfulSecondColor = stacksWithThatColor.filter(
         ([j, stack]) => j !== i && stack.groups.at(-2) && topColors.has(stack.groups.at(-2)!.value)
       );
-      console.log(stacksWithHelpfulSecondColor.length, stacksWithHelpfulSecondColor.map(([i, s]) => i))
       for (const [j, fromStack] of stacksWithHelpfulSecondColor){
         const groupToBeMoved = fromStack.groups.at(-1)!;
         if (groupToBeMoved.count <= toStack.space) {
