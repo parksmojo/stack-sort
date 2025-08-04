@@ -50,11 +50,10 @@ export class Stack {
 
   static move(from: Stack, to: Stack): void {
     if (!from.height) throw new Error('cannot move from empty stack');
-    if (to.height && from.groups.at(-1)?.value !== to.groups.at(-1)?.value) {
+    if (from.stack.at(-1)!.count > to.space) throw new Error('Not enough space on destination stack');
+    if (to.height && from.stack.at(-1)?.value !== to.stack.at(-1)?.value)
       throw new Error('Cannot combine different colors');
-    }
-    if (from.groups.at(-1)!.count > to.space) throw new Error('Not enough space on destination stack');
 
-    to.groups.push(from.groups.pop()!);
+    to.stack.push(from.stack.pop()!);
   }
 }
