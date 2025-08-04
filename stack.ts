@@ -4,7 +4,7 @@ interface Group {
 }
 
 export class Stack {
-  private stack: Group[];
+  readonly stack: Group[];
 
   get height() {
     return this.stack.reduce((prev, now) => prev + now.count, 0);
@@ -16,10 +16,6 @@ export class Stack {
 
   get space() {
     return this.maxHeight - this.height;
-  }
-
-  get groups() {
-    return this.stack;
   }
 
   get values() {
