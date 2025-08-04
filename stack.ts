@@ -54,6 +54,12 @@ export class Stack {
     if (to.height && from.stack.at(-1)?.value !== to.stack.at(-1)?.value)
       throw new Error('Cannot combine different colors');
 
-    to.stack.push(from.stack.pop()!);
+    const moved = from.stack.pop()!;
+    const group = to.stack.at(-1);
+    if (!group) {
+      to.stack.push(moved);
+    } else {
+      group.count += moved.count;
+    }
   }
 }
