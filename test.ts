@@ -3,24 +3,48 @@ import { Stack } from './stack.ts';
 
 function test(size: number, arrs: string[][]) {
   const stacks = arrs.map(arr => new Stack(size, arr));
-  console.log('INITIAL:');
-  printStacks(stacks);
+  const printer = new StackPrinter();
+
+  printer.addInitial(stacks);
   stackSorter(stacks);
-  console.log('RESULT:');
-  printStacks(stacks);
+  printer.addResult(stacks);
+  printer.print();
 }
 
-function printStacks(stacks: Stack[]) {
-  const stackArrays = stacks.map(s => s.values);
-  const start = stacks[0].maxHeight - 1;
-  for (let i = start; i >= 0; i--) {
-    const row: string[] = [];
-    for (const stack of stackArrays) {
-      row.push(stack.at(i) ?? ' ');
+class StackPrinter {
+  private initialLines: string[] = [];
+  private resultLines: string[] = [];
+
+  addInitial(stacks: Stack[]) {
+    const stackArrays = stacks.map(s => s.values);
+    for (let i = 0; i < stacks[0].maxHeight; i++) {
+      const row: string[] = [];
+      for (const stack of stackArrays) {
+        row.push(stack.at(i) ?? ' ');
+      }
+      this.initialLines.push(row.join('|'));
     }
-    console.log(row.join('|'));
   }
-  console.log('');
+
+  addResult(stacks: Stack[]) {
+    const stackArrays = stacks.map(s => s.values);
+    for (let i = 0; i < stacks[0].maxHeight; i++) {
+      const row: string[] = [];
+      for (const stack of stackArrays) {
+        row.push(stack.at(i) ?? ' ');
+      }
+      this.resultLines.push(row.join('|'));
+    }
+  }
+
+  print() {
+    for (let i = this.initialLines.length - 1; i >= 0; i--) {
+      console.log(
+        `${this.initialLines[i]}  ${i === Math.ceil(this.initialLines.length / 2) ? '=>' : '  '}  ${this.resultLines[i]}`
+      );
+    }
+    console.log('-----');
+  }
 }
 
 const testCases: [number, string[][]][] = [
