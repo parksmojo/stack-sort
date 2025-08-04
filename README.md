@@ -36,12 +36,6 @@ A `Stack` class is provided and implements the stack behavior required for this 
 
 Refer to the `stack.ts` file for full details.
 
-## 💡 Hints
-
-- Think recursively or use BFS/DFS with memoization.
-- Use a visited set to avoid repeating states.
-- Efficient state encoding is key for performance.
-
 ## 🏁 Goal
 
 Implement `stackSorter` to solve any valid configuration using the fewest number of moves.
