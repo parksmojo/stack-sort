@@ -33,7 +33,7 @@ export function stackSorter(stacks: Stack[]): number {
       const colorCounts = new Map<string, number>();
       let most: [string, number] = ['', 0];
       stacks.forEach(stack => {
-        if (stack.groups.length) {
+        if (stack.groups.length > 1) {
           const group = stack.groups.at(-1)!;
           colorCounts.set(group.value, (colorCounts.get(group.value) ?? 0) + group.count);
           if (colorCounts.get(group.value) ?? 0 > most[1]) {
@@ -48,6 +48,22 @@ export function stackSorter(stacks: Stack[]): number {
         madeChange = true;
         continue;
       }
+    }
+
+    const stacksWithSpace = iStacks.filter(([_, stack]) => stack.groups.length > 1 && stack.space)
+    for (const [i, toStack] of stacksWithSpace) {
+      const color = toStack.groups.at(-1)!.value;
+      const stacksWithThatColor = iStacks.filter(([j, stack]) => stack.groups.at(-1)?.value === color && j !== i);
+      for (const [j, fromStack] of stacksWithThatColor) {
+        const groupToBeMoved = fromStack.groups.at(-1)!;
+        if (groupToBeMoved.count <= toStack.space) {
+          Stack.move(fromStack, toStack);
+          moves++;
+          madeChange = true;
+          break;
+        }
+      }
+      if (madeChange) break;
     }
   }
   return moves;
